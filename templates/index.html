@@ -4,9 +4,13 @@
 
 <h1>Upload HAR files</h1>
 
+<div style="display:block;width:200px;height:200px;margin:auto;">
+
 <form method="POST" enctype="multipart/form-data" action='/upload'>
-<input type="file" name="file"></input>
-<input type="submit" value="Upload">
+<input type="file" name="file" style="padding:10px"></input>
+<input type="submit" value="Upload" class="btn btn-default" style="display:block;width:72px;margin:auto;">
 </form>
+
+</div>
 
 {% endblock %}

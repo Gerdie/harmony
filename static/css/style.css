@@ -1,0 +1,18 @@
+#harmony-logo {
+    width: 579px;
+    display:block;
+    margin: auto;
+}
+h1 {
+    text-align: center;
+}
+canvas, .harchart, canvas.harchart {
+    width: 500px;
+}
+p {
+    text-align: center;
+    padding: 10px;
+}
+input {
+    padding:10px;
+}
