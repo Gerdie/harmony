@@ -114,7 +114,7 @@ class Harmony(object):
             if entry.request.url and entry.response.body_size > 5000:
                 print "found entry.request.url"
                 print entry.response.body_size
-                data["labels"].append(entry.request.url[:11])
+                data["labels"].append(entry.request.url[7:18])
                 data["datasets"][0]["data"].append(entry.response.body_size)
         print data
         return data
