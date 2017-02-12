@@ -22,7 +22,8 @@ demo_path = os.getcwd() + '/static/demo/target_web.har'
 harmony = harmony_open_file(demo_path)
 print harmony.createDoughnut()
 # print harmony._creator
-# # print harmony._entries[1].request.url
+print harmony._entries[3].request.url
+print harmony._entries[3].response.body_size
 # # print harmony._entries[1].start, harmony._entries[1].timings, harmony._entries[1].time
 # print harmony._entries[2].request.url
 # # print harmony._entries[2].request.query

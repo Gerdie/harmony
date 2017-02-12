@@ -31,6 +31,15 @@ def serve_donut_json():
     return jsonify(res)
 
 
+@app.route('/bar.json')
+def serve_bar_json():
+    """Serve data for donut chart"""
+
+    res = session.get('bar', {})
+
+    return jsonify(res)
+
+
 @app.route('/results')
 def show_charts():
     """Display charts of HAR data"""
@@ -60,6 +69,7 @@ def upload_file():
             session['har'] = harpath
             current = Harmony(harpath)
             session['donut'] = current.createDoughnut()
+            session['bar'] = current.createBar()
             return redirect("/results")
 
 if __name__ == "__main__":

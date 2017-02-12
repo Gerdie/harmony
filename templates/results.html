@@ -8,9 +8,15 @@
 
 <p>Too many requests for images, especially large images like SVG and JPEGs, can slow down a webpage.</p>
 
+<canvas id="HarBar" class="harchart" width="500" height="500" style="display:block;width:500px;height:500px; margin:auto;"></canvas>
+
+<p>Consider trimming down large requests that could be slowing down your site.</p>
+
 <script>
 var HARDonutChart = document.getElementById("HarDoughnut");
 var donutData = $.get('/donut.json');
+var HARBarChart = document.getElementById("HarBar");
+var barData = $.get('/bar.json');
 
 $.get( '/donut.json', function( donutData ) {
   console.log(donutData);
@@ -24,6 +30,24 @@ $.get( '/donut.json', function( donutData ) {
         title: {
             display: true,
             text: 'Requests By Content-Type'
+        },
+        responsive: false,
+    }
+});
+
+});
+$.get( '/bar.json', function( barData ) {
+  console.log(barData);
+  var HarBar = new Chart(HARBarChart, {
+    type: 'bar',
+    data: barData,
+    options: {
+        animation:{
+            animateScale:true
+        },
+        title: {
+            display: true,
+            text: 'Requests By Size'
         },
         responsive: false,
     }

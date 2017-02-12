@@ -42,7 +42,7 @@ class HAR_Response(object):
         self.comment = res_dict.get('comment')
         self.cookies = res_dict.get('cookies')
         self.content = res_dict.get('content')
-        self.body_size = res_dict.get('bodySize')
+        self.body_size = res_dict.get('bodySize', 0)
         self.header_size = res_dict.get('headersSize')
 
 
@@ -74,11 +74,6 @@ class Harmony(object):
         self._version = self._log.get('version', '')
         self._creator = self._log.get('creator', {})
 
-    # @staticmethod
-    # def generate_random_color(self):
-    #     r = lambda: random.randint(0, 255)
-    #     return '#%02X%02X%02X' % (r(), r(), r())
-
     def createDoughnut(self):
         """Create doughnut chart of content types"""
 
@@ -102,3 +97,25 @@ class Harmony(object):
                     existing_i = data["labels"].index(desired)
                     data["datasets"][0]["data"][existing_i] += 1
         return data
+
+    def createBar(self):
+        """Create bar chart of requests"""
+
+        data = {"labels": [],
+                "datasets": [{
+                    # "label": "Requests by size in uncompressed bytes",
+                    "data": [],
+                    "backgroundColor":[],
+                    "borderColor": [],
+                    "borderWidth": 1,
+                    }]
+                }
+        for entry in self._entries:
+            if entry.request.url and entry.response.body_size > 5000:
+                print "found entry.request.url"
+                print entry.response.body_size
+                data["labels"].append(entry.request.url[:11])
+                data["datasets"][0]["data"].append(entry.response.body_size)
+        print data
+        return data
+
