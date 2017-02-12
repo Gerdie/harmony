@@ -8,10 +8,22 @@
     <link href="https://fonts.googleapis.com/css?family=Lato|Droid+Serif" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/style.css">
     <title>Harmony</title>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.js"></script>
+    {% block head %}{% endblock %}
 </head>
 <body>
+    <header>
+        <!-- Flashed messages show up here -->
+        {% with messages = get_flashed_messages() %}
+            {% for message in messages %}
+                <div class="alert alert-warning">{{ message }}</div>
+            {% endfor %}
+        {% endwith %}
+        <img id="harmony-logo" src="/static/img/harmony-logo.png"/>
+    </header>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     {% block body %} 
-        Body content goes here! 
+
     {% endblock %}
 </body>
 </html>

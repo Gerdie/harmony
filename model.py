@@ -1,4 +1,23 @@
 import json
+import random
+
+
+def generate_random_color():
+    r = lambda: random.randint(0, 255)
+    return '#%02X%02X%02X' % (r(), r(), r())
+
+
+class HAR_Header(object):
+    """Header in a Resp/Req"""
+
+    def __init__(self, header):
+        self.name = header.get('name')
+        self.value = header.get('value')
+
+    @classmethod
+    def from_request(cls, header):
+        new_header = HAR_Header(header)
+        return (new_header.name, new_header.value)
 
 
 class HAR_Request(object):
@@ -8,7 +27,7 @@ class HAR_Request(object):
         self.cookies = req_dict.get('cookies')
         self.url = req_dict.get('url')
         self.query = req_dict.get('queryString')
-        self.headers = req_dict.get('headers')
+        self.headers = {k: v for (k, v) in map(HAR_Header.from_request, req_dict.get('headers'))}
         self.method = req_dict.get('method')
 
 
@@ -18,9 +37,13 @@ class HAR_Response(object):
     def __init__(self, res_dict):
         self.status = res_dict.get('status')
         self.status_text = res_dict.get('statusText')
+        # self.headers = res_dict.get('headers')
+        self.headers = {k: v for (k, v) in map(HAR_Header.from_request, res_dict.get('headers'))}
         self.comment = res_dict.get('comment')
         self.cookies = res_dict.get('cookies')
         self.content = res_dict.get('content')
+        self.body_size = res_dict.get('bodySize')
+        self.header_size = res_dict.get('headersSize')
 
 
 class Entry(object):
@@ -29,6 +52,8 @@ class Entry(object):
     def __init__(self, entrydict):
         self.server_ip = entrydict.get('serverIPAddress')
         self.start = entrydict.get('startedDateTime')
+        self.timings = entrydict.get('timings')
+        self.time = entrydict.get('time')
         self.cache = entrydict.get('cache')
         self.request = HAR_Request(entrydict.get('request', {}))
         self.response = HAR_Response(entrydict.get('response', {}))
@@ -48,3 +73,32 @@ class Harmony(object):
         self._entries = map(Entry.from_har, self._log.get('entries', []))
         self._version = self._log.get('version', '')
         self._creator = self._log.get('creator', {})
+
+    # @staticmethod
+    # def generate_random_color(self):
+    #     r = lambda: random.randint(0, 255)
+    #     return '#%02X%02X%02X' % (r(), r(), r())
+
+    def createDoughnut(self):
+        """Create doughnut chart of content types"""
+
+        data = {"labels": [],
+                "datasets": [{
+                    "data": [],
+                    "backgroundColor":[],
+                    "hoverBackgroundColor": []
+                    }]
+                }
+        for entry in self._entries:
+            if "Content-Type" in entry.response.headers:
+                desired = entry.response.headers["Content-Type"].split(";")[0].split("/")[-1].split("+")[0].split("-")[-1]
+                if desired not in data["labels"]:
+                    data["labels"].append(desired)
+                    data["datasets"][0]["data"].append(1)
+                    random_color = generate_random_color()
+                    data["datasets"][0]["backgroundColor"].append(random_color)
+                    data["datasets"][0]["hoverBackgroundColor"].append(random_color)
+                else:
+                    existing_i = data["labels"].index(desired)
+                    data["datasets"][0]["data"][existing_i] += 1
+        return data

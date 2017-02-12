@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h1>Results</h1>
+<!-- <script type="text/javascript" src="/static/js/harmony.js"></script> -->
+
+<canvas id="HarDoughnut" class="harchart" width="500" height="500" style="display:block;width:500px;height:500px; margin:auto;"></canvas>
+
+<p>Too many requests for images, especially large images like SVG and JPEGs, can slow down a webpage.</p>
+
+<script>
+var HARDonutChart = document.getElementById("HarDoughnut");
+var donutData = $.get('/donut.json');
+
+$.get( '/donut.json', function( donutData ) {
+  console.log(donutData);
+  var HarDoughnut = new Chart(HARDonutChart, {
+    type: 'doughnut',
+    data: donutData,
+    options: {
+        animation:{
+            animateScale:true
+        },
+        title: {
+            display: true,
+            text: 'Requests By Content-Type'
+        },
+        responsive: false,
+    }
+});
+
+});
+</script>
+
+{% endblock %}
