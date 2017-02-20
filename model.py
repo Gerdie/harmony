@@ -116,6 +116,6 @@ class Harmony(object):
                 print entry.response.body_size
                 data["labels"].append(entry.request.url[7:18])
                 data["datasets"][0]["data"].append(entry.response.body_size)
+                data["datasets"][0]["backgroundColor"].append(generate_random_color())
         print data
         return data
-
