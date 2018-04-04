@@ -1,20 +1,20 @@
-#Harmony
+# Harmony
 
 Harmony is a web application built to upload, analyze and visualize HTTP Archive (HAR) files. Using Harmony, users can see details about request type and size that may be impacting their site's performance. Harmony was developed by [Maria Moy] (http://www.linkedin.com/in/maria-k-moy) as a part of the Developer Week 2017 Hackathon.
 
-##Contents
+## Contents
 - Tech Stack
 - Features
 - Installation
 - About Me
 
-##Tech Stack
+## Tech Stack
 
 Backend: Python, Flask
 
 Frontend: Javascript, jQuery, AJAX, HTML5, CSS3, Bootstrap
 
-##Features
+## Features
 
 - Users can upload HAR files for analysis.
 
@@ -29,7 +29,7 @@ Frontend: Javascript, jQuery, AJAX, HTML5, CSS3, Bootstrap
 ![bar chart](https://github.com/Gerdie/harmony/blob/master/static/img/bar.png)
 
 
-##Installation
+## Installation
 
 
 To create and activate a virtual environment:
@@ -43,7 +43,7 @@ To install the project's dependencies:
 pip install -r requirements.txt
 ```
 
-##About Me
+## About Me
 
 Harmony was developed by Maria Moy. Find her on [LinkedIn]
 (http://www.linkedin.com/in/maria-k-moy) or [GitHub]
